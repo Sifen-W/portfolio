@@ -1,6 +1,11 @@
-import { getProjects } from "@/lib/db";
+import { Navbar } from "@/components/sections/navbar";
+import { Hero } from "@/components/sections/hero";
 
-export default async function Home() {
-  const projects = await getProjects();
-  return <pre>{JSON.stringify(projects, null, 2)}</pre>;
+export default function Home() {
+  return (
+    <main>
+      <Navbar />
+      <Hero />
+    </main>
+  );
 }

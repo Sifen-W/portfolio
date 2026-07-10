@@ -12,21 +12,35 @@ export function About() {
   const [isInView, setIsInView] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.unobserve(entry.target);
+    let observer: IntersectionObserver | null = null;
+
+    const timer = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            if (observer && ref.current) {
+              observer.unobserve(ref.current);
+            }
+          }
+        },
+        { 
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px"
         }
-      },
-      { threshold: 0.1 }
-    );
+      );
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 200);
 
-    return () => observer.disconnect();
+    return () => {
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
   }, []);
 
   return (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { BookOpen, Music, Coffee } from "lucide-react";
 
 const skills = [
   "TypeScript", "React", "Next.js", "Node.js", "Express",
@@ -12,6 +13,24 @@ const funFacts = [
   "built a hierarchical solar system simulator with OpenGL",
   "debugged a trap handler at the assembly level, more than once",
   "compared A* and GBFS pathfinding just to see which one lied less",
+];
+
+const interests = [
+  {
+    icon: BookOpen,
+    label: "reading",
+    detail: "no fixed genre — just whatever's currently stealing my sleep schedule",
+  },
+  {
+    icon: Music,
+    label: "music",
+    detail: "always something playing while I code",
+  },
+  {
+    icon: Coffee,
+    label: "coffee",
+    detail: "non-negotiable before any debugging session",
+  },
 ];
 
 export function About() {
@@ -66,7 +85,7 @@ export function About() {
         <p className={`max-w-2xl text-[rgb(var(--text-muted))] leading-relaxed ${
           isInView ? "animate-fade-up-delay-2" : "opacity-0"
         }`}>
-          I'm a computer science student building full-stack applications
+          I'm a Software Engineering student building full-stack applications
           with a focus on clean architecture and solving real problems.
           I enjoy working across the stack — from backend systems and
           databases to polished, responsive interfaces.
@@ -109,6 +128,40 @@ export function About() {
               </li>
             ))}
           </ul>
+        </div>
+
+        <div
+          className={`mt-10 max-w-2xl ${
+            isInView ? "animate-fade-up" : "opacity-0"
+          }`}
+          style={isInView ? {
+            animationDelay: "700ms",
+            animationFillMode: "both",
+          } : undefined}
+        >
+          <p className="font-mono-custom text-xs text-[rgb(var(--text-muted))] mb-4">
+            // outside of code
+          </p>
+          <div className="grid gap-4 sm:grid-cols-3">
+            {interests.map((interest) => {
+              const Icon = interest.icon;
+              return (
+                <div
+                  key={interest.label}
+                  className="rounded-xl border border-white/10 p-4"
+                >
+                  <Icon
+                    size={18}
+                    className="text-[rgb(var(--accent-teal))] mb-2"
+                  />
+                  <p className="text-sm font-medium mb-1">{interest.label}</p>
+                  <p className="text-xs text-[rgb(var(--text-muted))] leading-relaxed">
+                    {interest.detail}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>

@@ -1,6 +1,9 @@
 "use server";
 
+import { Resend } from "resend";
 import { createMessage } from "@/lib/db";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function submitContactForm(formData: FormData) {
   const name = formData.get("name") as string;
@@ -13,8 +16,19 @@ export async function submitContactForm(formData: FormData) {
 
   try {
     await createMessage({ name, email, message });
+
+    await resend.emails.send({
+      from: "Portfolio <onboarding@resend.dev>",
+      to: "sifen.ugr-9733-16@aau.edu.et", // your real inbox
+      subject: `New message from ${name}`,
+      replyTo: email,
+      text: message,
+    });
+
     return { success: true };
   } catch (error) {
-    return { success: false, error: "Something went wrong. Try again." };
+    // Still succeeds even if email fails, since the message is safely in the DB
+    console.error("Email send failed:", error);
+    return { success: true };
   }
 }

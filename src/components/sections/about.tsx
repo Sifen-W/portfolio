@@ -7,6 +7,13 @@ const skills = [
   "SQL", "Python", "Flutter", "Git",
 ];
 
+const funFacts = [
+  "once wrote a custom priority scheduler with aging for xv6",
+  "built a hierarchical solar system simulator with OpenGL",
+  "debugged a trap handler at the assembly level, more than once",
+  "compared A* and GBFS pathfinding just to see which one lied less",
+];
+
 export function About() {
   const ref = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
@@ -24,7 +31,7 @@ export function About() {
             }
           }
         },
-        { 
+        {
           threshold: 0.1,
           rootMargin: "0px 0px -50px 0px"
         }
@@ -80,6 +87,28 @@ export function About() {
               {skill}
             </span>
           ))}
+        </div>
+
+        <div
+          className={`mt-10 max-w-2xl rounded-xl border border-white/10 bg-[rgb(var(--bg-surface))] p-6 ${
+            isInView ? "animate-fade-up" : "opacity-0"
+          }`}
+          style={isInView ? {
+            animationDelay: "600ms",
+            animationFillMode: "both",
+          } : undefined}
+        >
+          <p className="font-mono-custom text-xs text-[rgb(var(--text-muted))] mb-3">
+            // a few fun facts
+          </p>
+          <ul className="space-y-2">
+            {funFacts.map((fact) => (
+              <li key={fact} className="font-mono-custom text-xs">
+                <span className="text-[rgb(var(--accent-teal))]">//</span>{" "}
+                <span className="text-[rgb(var(--text-primary))]">{fact}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

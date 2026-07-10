@@ -23,15 +23,15 @@ export async function Projects() {
             {projects.map((project) => (
               <div
                 key={project.id}
-                className="rounded-2xl border border-white/10 bg-[rgb(var(--bg-surface))] overflow-hidden"
+                className="group rounded-2xl border border-white/10 bg-[rgb(var(--bg-surface))] overflow-hidden transition-all duration-300 ease-in-out hover:scale-[1.02] hover:border-white/20 hover:shadow-[0_10px_30px_-10px_rgba(45,212,167,0.15)]"
               >
                 {project.image_url && (
-                  <div className="relative h-48 w-full">
+                  <div className="relative h-48 w-full overflow-hidden">
                     <Image
                       src={project.image_url}
                       alt={project.title}
                       fill
-                      className="object-cover"
+                      className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
                     />
                   </div>
                 )}

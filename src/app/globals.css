@@ -148,6 +148,8 @@ body {
 .font-mono-custom {
   font-family: var(--font-mono);
 }
+
+/* Custom Animations */
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -168,6 +170,17 @@ body {
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(1.15);
+  }
+}
+
 .animate-float {
   animation: float 4s ease-in-out infinite;
 }
@@ -184,4 +197,13 @@ body {
 .animate-fade-up-delay-2 {
   animation: fade-up 0.6s ease-out 0.2s forwards;
   opacity: 0;
+}
+
+.animate-fade-up-delay-3 {
+  animation: fade-up 0.6s ease-out 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 8s ease-in-out infinite;
 }

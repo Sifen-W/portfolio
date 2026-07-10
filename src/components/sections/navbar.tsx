@@ -14,7 +14,7 @@ export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="border-b border-white/10 px-6 py-4 md:px-10">
+    <nav className="sticky top-0 z-50 w-full border-b border-white/10 bg-[rgb(var(--bg-page))]/80 backdrop-blur-md px-6 py-4 md:px-10">
       <div className="flex items-center justify-between">
         <span className="font-mono-custom text-sm text-[rgb(var(--text-muted))]">
           sifen-woldemariam

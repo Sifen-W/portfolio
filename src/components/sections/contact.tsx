@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Mail } from "lucide-react";
 import { submitContactForm } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
@@ -9,6 +9,40 @@ import { Textarea } from "@/components/ui/textarea";
 
 export function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const ref = useRef<HTMLElement>(null);
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    let observer: IntersectionObserver | null = null;
+
+    const timer = setTimeout(() => {
+      observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setIsInView(true);
+            if (observer && ref.current) {
+              observer.unobserve(ref.current);
+            }
+          }
+        },
+        { 
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px"
+        }
+      );
+
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+      if (observer) {
+        observer.disconnect();
+      }
+    };
+  }, []);
 
   async function handleSubmit(formData: FormData) {
     setStatus("loading");
@@ -17,16 +51,22 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="px-6 py-24 md:px-10">
+    <section ref={ref} id="contact" className="px-6 py-24 md:px-10">
       <div className="mx-auto max-w-5xl">
-        <p className="font-mono-custom text-sm text-[rgb(var(--accent-teal))] mb-2">
+        <p className={`font-mono-custom text-sm text-[rgb(var(--accent-teal))] mb-2 ${
+          isInView ? "animate-fade-up" : "opacity-0"
+        }`}>
           _contact-me
         </p>
-        <h2 className="text-3xl font-medium mb-10 md:text-4xl">
+        <h2 className={`text-3xl font-medium mb-10 md:text-4xl ${
+          isInView ? "animate-fade-up-delay-1" : "opacity-0"
+        }`}>
           Let's talk
         </h2>
 
-        <div className="grid gap-10 rounded-2xl border border-white/10 bg-[rgb(var(--bg-surface))] p-8 md:grid-cols-2 md:p-12">
+        <div className={`grid gap-10 rounded-2xl border border-white/10 bg-[rgb(var(--bg-surface))] p-8 md:grid-cols-2 md:p-12 ${
+          isInView ? "animate-fade-up-delay-2" : "opacity-0"
+        }`}>
           {/* Left column — info */}
           <div className="flex flex-col justify-center gap-6">
             <div>
